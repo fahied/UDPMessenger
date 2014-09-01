@@ -8,9 +8,41 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MessengerActivity$PlaceholderFragment">
 
-    <TextView
-        android:text="@string/hello_world"
+
+    <CheckBox
+        android:id="@+id/isHostCheckBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Broadcasting to all"
+        android:enabled="false"/>
+
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence1"
+        android:id="@+id/sequence1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:onClick="sendMessageSequence"
+        android:layout_below="@+id/isHostCheckBox"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence2"
+        android:id="@+id/button"
+        android:layout_below="@+id/sequence1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence3"
+        android:id="@+id/button2"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
 
 </RelativeLayout>

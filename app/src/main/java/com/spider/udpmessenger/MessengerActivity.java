@@ -3,6 +3,7 @@ package com.spider.udpmessenger;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,14 +37,22 @@ public class MessengerActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+/*
+		 * Because it's only ONE option in the menu.
+		 * In order to make it simple, We always start SetPreferenceActivity
+		 * without checking.
+		 */
+
+        Intent intent = new Intent();
+        intent.setClass(MessengerActivity.this, SetPreferenceActivity.class);
+        startActivityForResult(intent, 0);
+        return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 
     /**

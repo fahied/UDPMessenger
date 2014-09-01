@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">UDPMessenger</string>
+    <string name="app_name">UDP Remote Video Controller</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="key_sequence1">sequence1</string>
+    <string name="key_sequence2">sequence2</string>
+    <string name="key_sequence3">sequence3</string>
+    <string name="title_sequence1">Sequence 1</string>
+    <string name="val_sequence2">Sequence 2</string>
+    <string name="val_sequence3">Sequence 3</string>
 
 </resources>

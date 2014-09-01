@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="UDP Host Configuration">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="Broadcast"
+            android:summary="Broadcast message to all" />
+        <EditTextPreference
+            android:key="destinationIP"
+            android:title="IP Address"
+            android:summary="IP address of the destination host"
+            android:dialogTitle="Destination IP address" />
+
+        <EditTextPreference
+            android:key="destinationPort"
+            android:title="Port Number"
+            android:summary="default UDP poart is 10002"
+            android:dialogTitle="Custom UDP port" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="UDP Messages Sequences">
+
+        <EditTextPreference
+            android:key="@string/key_sequence1"
+            android:title="@string/title_sequence1"
+            android:summary="Sequence of message triggered by button1"
+            android:dialogTitle="UDP message sequence to control reomte vidoes" />
+        <EditTextPreference
+            android:key="@string/key_sequence2"
+            android:title="@string/val_sequence2"
+            android:summary="Sequence of message triggered by button1"
+            android:dialogTitle="UDP message sequence to control reomte vidoes" />
+        <EditTextPreference
+            android:key="@string/key_sequence3"
+            android:title="@string/val_sequence3"
+            android:summary="Sequence of message triggered by button3"
+            android:dialogTitle="UDP message sequence to control reomte vidoes" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
