@@ -1,32 +1,35 @@
 package com.spider.udpmessenger;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
+import android.widget.CheckBox;
 
 
 public class MessengerActivity extends Activity {
+
+    // local var
+    CheckBox broadCastCheckBox;
+    private SharedPreferences sharedPreferences;
+    private Boolean broadcasting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
+        //UI
+        broadCastCheckBox = (CheckBox)findViewById(R.id.broadcasting);
 
+        //initialize
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //load preference into local var
+        loadPref();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,21 +56,18 @@ public class MessengerActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        /*
+		 * To make it simple, always re-load Preference setting.
+		 */
+        loadPref();
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_messenger, container, false);
-            return rootView;
-        }
+    private void loadPref() {
+        // broad to all preference
+        boolean checkbox_preference = sharedPreferences.getBoolean("checkbox_preference", false);
+        broadCastCheckBox.setChecked(checkbox_preference);
+        broadcasting = checkbox_preference;
     }
+
+
 }

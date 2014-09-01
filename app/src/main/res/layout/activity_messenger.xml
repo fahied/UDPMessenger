@@ -1,7 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessengerActivity"
-    tools:ignore="MergeRootFrame" />
+    android:orientation="vertical" >
+
+    <CheckBox
+        android:id="@+id/broadcasting"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Broadcasting to all"
+        android:enabled="false"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence1"
+        android:id="@+id/sequence1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:onClick="sendMessageSequence"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence2"
+        android:id="@+id/sequence2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:onClick="sendMessageSequence"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_sequence3"
+        android:id="@+id/sequence3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:onClick="sendMessageSequence"/>
+</LinearLayout>
