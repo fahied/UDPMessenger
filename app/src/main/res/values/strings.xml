@@ -10,5 +10,7 @@
     <string name="title_sequence1">Sequence 1</string>
     <string name="val_sequence2">Sequence 2</string>
     <string name="val_sequence3">Sequence 3</string>
+    <string name="key_destination_ip">destination_ip</string>
+    <string name="key_port_number">port_number</string>
 
 </resources>
