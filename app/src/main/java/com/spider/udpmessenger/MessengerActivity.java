@@ -1,6 +1,8 @@
 package com.spider.udpmessenger;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -106,6 +108,11 @@ public class MessengerActivity extends Activity {
 
 
     private void handleUDPRequest(String sequenceMessage) throws InterruptedException, IOException {
+        if (sequenceMessage.equalsIgnoreCase(""))
+        {
+            showErrorDialog("Empty Sequence","Go to settings and define message sequence");
+           return;
+        }
         String[]parts = sequenceMessage.split("\n");
         for (int i = 0; i < parts.length;i++)
         {
@@ -122,6 +129,9 @@ public class MessengerActivity extends Activity {
                     udpMessenger.broadcastUDPMessage(part,destinationPort);
                 else udpMessenger.sendUDPMessage(part,destinationPort,destinationIP);
             }
+            // if all messages has been sent
+            if (i == parts.length-1)
+            showErrorDialog("Messages sent successfully",sequenceMessage);
         }
     }
 
@@ -131,4 +141,13 @@ public class MessengerActivity extends Activity {
     }
 
 
+
+    private void showErrorDialog(String dialogTitle,String errorString){
+        String okButtonString = "OK";
+        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        ad.setTitle(dialogTitle);
+        ad.setMessage(errorString);
+        ad.show();
+        return;
+    }
 }
