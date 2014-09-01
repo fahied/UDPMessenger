@@ -7,8 +7,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+
+import java.io.IOException;
+import java.net.SocketException;
+
+import helpers.UDPMessenger;
 
 
 public class MessengerActivity extends Activity {
@@ -17,6 +23,12 @@ public class MessengerActivity extends Activity {
     CheckBox broadCastCheckBox;
     private SharedPreferences sharedPreferences;
     private Boolean broadcasting;
+
+    // custom udp messenger to send/broadcast message
+    private UDPMessenger udpMessenger;
+    // local ref var to preferences
+    private String destinationIP;
+    private int destinationPort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +39,14 @@ public class MessengerActivity extends Activity {
 
         //initialize
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //udp init
+        udpMessenger = new UDPMessenger();
+        try {
+            udpMessenger.startUDPMessenger();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
         //load preference into local var
         loadPref();
     }
@@ -67,6 +87,47 @@ public class MessengerActivity extends Activity {
         boolean checkbox_preference = sharedPreferences.getBoolean("checkbox_preference", false);
         broadCastCheckBox.setChecked(checkbox_preference);
         broadcasting = checkbox_preference;
+
+        //Destination IP preference
+        destinationIP   = sharedPreferences.getString(getString(R.string.key_destination_ip),"127.0.0.1");
+        String port = sharedPreferences.getString(getString(R.string.key_port_number), "20002");
+        destinationPort = Integer.parseInt(port);
+
+    }
+
+
+    /** Called when the user touches the button */
+    public void sendMessageSequence(View view) throws IOException, InterruptedException {
+        // Do something in response to button click
+        Button button = (Button)view;
+        String messageSequence = sharedPreferences.getString(button.getText().toString(), "");
+        handleUDPRequest(messageSequence);
+    }
+
+
+    private void handleUDPRequest(String sequenceMessage) throws InterruptedException, IOException {
+        String[]parts = sequenceMessage.split("\n");
+        for (int i = 0; i < parts.length;i++)
+        {
+            String part = parts[i];
+            //if the message part is numeric then probably it is delay otherwise a message to be sent
+            if (isNumeric(part))
+            {
+                int delay  = Integer.parseInt(parts[i]);
+                Thread.sleep(delay);
+            }
+            else if (!part.equalsIgnoreCase(""))
+            {
+                if (broadcasting)
+                    udpMessenger.broadcastUDPMessage(part,destinationPort);
+                else udpMessenger.sendUDPMessage(part,destinationPort,destinationIP);
+            }
+        }
+    }
+
+    public static boolean isNumeric(String str)
+    {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 
 
