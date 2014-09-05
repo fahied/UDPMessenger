@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 
+import com.spider.udpmessenger.MessengerActivity;
 import com.spider.udpmessenger.R;
 
 import java.io.IOException;
@@ -69,8 +70,6 @@ public class UDPMessenger implements Runnable
 
 
     public void sendUDPMessage(String messageStr, int destinationPort,String destinationIP) {
-
-        //datagramSocket.setBroadcast(false);
         InetAddress local = null;
         try {
             local = InetAddress.getByName(destinationIP);
@@ -131,9 +130,16 @@ public class UDPMessenger implements Runnable
 
     @Override
     public void run() {
+        MessengerActivity messengerActivity = (MessengerActivity)context;
+
         if (this.messageSequence.equalsIgnoreCase(""))
         {
-           // showErrorDialog("Empty Sequence","Go to settings and define message sequence");
+            messengerActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showDialog("Empty Sequence", "Go to settings and define message sequence");
+                }
+            });
             return;
         }
         String[]parts = this.messageSequence.split("\n");
@@ -163,10 +169,13 @@ public class UDPMessenger implements Runnable
             // if all messages has been sent
             if (i == parts.length-1)
             {
-                //
-                //showErrorDialog("Messages sent successfully",messageSequence);
+                messengerActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showDialog("Messages sent successfully", messageSequence);
+                    }
+                });
             }
-
         }
     }
 
@@ -176,7 +185,7 @@ public class UDPMessenger implements Runnable
     }
 
 
-    private void showErrorDialog(String dialogTitle,String errorString){
+    private void showDialog(String dialogTitle, String errorString){
         String okButtonString = "OK";
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle(dialogTitle);

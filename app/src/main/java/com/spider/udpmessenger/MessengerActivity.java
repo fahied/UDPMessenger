@@ -15,6 +15,10 @@ import android.widget.CheckBox;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import helpers.UDPMessenger;
 
@@ -82,6 +86,20 @@ public class MessengerActivity extends Activity {
         // Do something in response to button click
         Button button = (Button)view;
         String messageSequence = sharedPreferences.getString(button.getText().toString(), "");
+
+/*
+        ExecutorService service =  Executors.newFixedThreadPool(10);
+        UDPMessenger sendTask = new UDPMessenger(this,messageSequence,broadcasting);
+        Future<String> future = service.submit(sendTask);
+        String  result = null;
+        try {
+            result = future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        System.out.println(result);
+*/
+
         Thread messengerThread = new Thread(new UDPMessenger(this,messageSequence,broadcasting));
         messengerThread.start();
     }
